@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.ArrayList;
+
 import javafx.scene.paint.*;
 
 //gameLoop
@@ -78,12 +78,10 @@ public class Tetris extends Application{
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 20; j++){
                 tempCanvas = new Canvas(20,20);
-                tetrisArea.add(tempCanvas ,i ,j);
-                //tetrisTiles.add(tempCanvas);
+                tetrisArea.add(tempCanvas ,i ,j);              
                 tetrisTiles[i][j] = tempCanvas;
 
                 tgc = tempCanvas.getGraphicsContext2D();
-                //arrayGc.add(tgc);
                 arrayGc[i][j] = tgc;
 
                 tgc.setFill(Color.BLACK);
@@ -105,7 +103,7 @@ public class Tetris extends Application{
         //GameLoop
         new AnimationTimer()
         {
-            int n = 2; // spped
+            int n = 2; // speed
             int x = 0;
             int y = 0;
             int i = 0; //iterator
