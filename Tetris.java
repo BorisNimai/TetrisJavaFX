@@ -45,6 +45,13 @@ public class Tetris extends Application{
     //[]
     //[]     J  
 
+    score
+    1 Lines = 40
+    2 Lines = 100
+    3 Lines = 300
+    4 Lines = 1200
+    
+    
     launch(args);
     }
 
