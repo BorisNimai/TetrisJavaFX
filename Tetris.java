@@ -64,8 +64,7 @@ public class Tetris extends Application{
 
         //temp , I think i will make a class out of this
         // setup of board
-
-        //TODO: convert arraylist list's to normal 2d arrays
+                
 
         Canvas tempCanvas;
         //ArrayList<Canvas> tetrisTiles = new ArrayList<Canvas>();
@@ -109,7 +108,7 @@ public class Tetris extends Application{
             int i = 0; //iterator
             
             
-            
+            @Override
             public void handle(long currentNanoTime){
                 i++;
                 if(i%n == 0){
