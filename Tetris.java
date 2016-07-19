@@ -45,32 +45,38 @@ public class Tetris extends Application{
     //[]
     //[]     J  
 
+    score
+    1 Lines = 40
+    2 Lines = 100
+    3 Lines = 300
+    4 Lines = 1200
+    
+    
     launch(args);
     }
 
     */
 
     public void start(Stage primaryStage){
+
         //Setup
         primaryStage.setTitle("Tetris");
-
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+
 
         // Tetris "canvas" setup
         GridPane tetrisArea = new GridPane();
         root.setCenter(tetrisArea);
 
         //temp , I think i will make a class out of this
-        // setup of board
-                
+        // setup of board               
 
-        Canvas tempCanvas;
-        //ArrayList<Canvas> tetrisTiles = new ArrayList<Canvas>();
+        Canvas tempCanvas;       
         Canvas[][] tetrisTiles = new Canvas[10][20];
+
         GraphicsContext tgc;
-        //ArrayList<GraphicsContext> arrayGc = new ArrayList<GraphicsContext>();
         GraphicsContext[][] arrayGc = new GraphicsContext[10][20];
 
 
