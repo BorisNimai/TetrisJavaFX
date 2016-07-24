@@ -1,97 +1,93 @@
-class Shape{
+import java.util.ArrayList;
+
+abstract class Shape{
 
     //Data
-    private int[][] gameBoard = new int[10][22];
-    private int shape = 0;
-    private int x;
-    private int y;
+    protected int x = -1;
+    protected int y = -1;
+    protected boolean falling = false;
+    protected int state = 1;
+    protected ArrayList<Integer> tetrimino = new ArrayList<Integer>();
+    protected int dimentionX;
+    protected int dimentionY;
 
-    //Constructor
+    private int[] xAndYPositions = new int[8];
 
-    Logic(){
-        for(int i = 0; i<10;i++){
-            for(int j = 0; j < 22; j++){
-                gameBoard[i][j] = 0;
+
+
+    //--------------------Method's---------- 3x3 Overrided for other dimentions
+
+    private int[] finnElementPosition(int state, ArrayList<Integer> tetrimino){
+
+    }
+
+    private void setElementPosition(){
+        int counter = 0;
+        if(x != -1 && y != -1){
+
+            for(int i  = state-1 * 9; i < state * 9; i++){
+                if(tetrimino.get(i) != 0){
+                    xAndYPositions[counter] = tetrimino.get(i) % 3;
+                    xAndYPositions[counter + 4] = tetrimino.get(i) / 3;
+                    counter++;
+                }
             }
+
+
         }
     }
 
-    //--------------------Method's----------
+    //Spawn
+    public void spawnTetrimino(){
+        falling = true;
+        this.x = 4;
+        this.y = 1;
 
 
-    //TimeTick
 
-    //MoveLeft
 
-    //MoveRight
 
-    //RotateLeft
+    }
 
-    //RotateRight
+    //timeStep
+    public void timeStep(){
 
-    //Drop
+    }
+
+    //moveLeft
+    public void moveLeft(){
+
+    }
+
+    //moveRight
+    public void moveRight(){
+
+    }
+
+    //rotateLeft
+    public void rotateLeft(){
+
+    }
+
+    //rotateRight
+    public void rotateRight(){
+
+    }
+
+    //drop
+    public void drop(){
+
+    }
 
     //Status -- If there is a tetrimino falling or not
-
-    //getTetrimino
-    public void getShape(int shape){
-        if(!status()){
-
-        }
+    public boolean status(){
+        return true;
     }
 
 
-    //ReturnBoard
-    /*
-      000l000000
-      000lll0000
-      ----------
-      0000000000
-      0000000000
-      0000000000
-      0000000000
-      .
-      .
-      .
-      1110000000
-      1101000000
 
-    */
 
     // shapes know their position, they take in (game board from this class)
-
-    //Shapes Think it will be a class in the future
-    /*
-      [ ][ ][ ][ ]   [ ][ ][1][ ]    [ ][ ][ ][ ]    [ ][1][ ][ ]
-      [1][1][1][1]   [ ][ ][1][ ]    [ ][ ][ ][ ]    [ ][1][ ][ ]   
-      [ ][ ][ ][ ]   [ ][ ][1][ ]    [1][1][1][1]    [ ][1][ ][ ]
-      [ ][ ][ ][ ]   [ ][ ][1][ ]    [ ][ ][ ][ ]    [ ][1][ ][ ]
-
-      [1][ ][ ]      [ ][1][1]       [ ][ ][ ]       [ ][1][ ]
-      [1][1][1]      [ ][1][ ]       [1][1][1]       [ ][1][ ]
-      [ ][ ][ ]      [ ][1][ ]       [ ][ ][1]       [1][1][ ]
-
-      [ ][ ][1]      [ ][1][ ]       [ ][ ][ ]       [1][1][ ]
-      [1][1][1]      [ ][1][ ]       [1][1][1]       [ ][1][ ]
-      [ ][ ][ ]      [ ][1][1]       [1][ ][ ]       [ ][1][ ]
-
-      [ ][1][1][ ]   [ ][1][1][ ]    [ ][1][1][ ]    [ ][1][1][ ]
-      [ ][1][1][ ]   [ ][1][1][ ]    [ ][1][1][ ]    [ ][1][1][ ]   
-      [ ][ ][ ][ ]   [ ][ ][ ][ ]    [ ][ ][ ][ ]    [ ][ ][ ][ ]
-      
-
-      [ ][1][1]      [ ][1][ ]       [ ][ ][ ]       [1][ ][ ]
-      [1][1][ ]      [ ][1][1]       [ ][1][1]       [1][1][ ]
-      [ ][ ][ ]      [ ][ ][1]       [1][1][ ]       [ ][1][ ]
-
-      [ ][1][ ]      [ ][1][ ]       [ ][ ][ ]       [ ][1][ ]
-      [1][1][1]      [ ][1][1]       [1][1][1]       [1][1][ ]
-      [ ][ ][ ]      [ ][1][ ]       [ ][1][ ]       [ ][1][ ]
-
-      [1][1][ ]      [ ][ ][1]       [ ][ ][ ]       [ ][1][ ]
-      [ ][1][1]      [ ][1][1]       [1][1][ ]       [1][1][ ]
-      [ ][ ][ ]      [ ][1][ ]       [ ][1][1]       [1][ ][ ]
-    */
 
 
 

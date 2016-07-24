@@ -24,7 +24,7 @@ import javafx.animation.AnimationTimer;
 public class Tetris extends Application{
     /* public static void main(String args[]){
 
-    //(10,20)Dimentions
+    //(10,20)Dimentions
 
     //[][]
     //  [][] Z
@@ -43,7 +43,11 @@ public class Tetris extends Application{
 
     //[][]
     //[]
-    //[]     J  
+    //[]     J
+
+    //   []  T
+    // [][][] 
+    
 
     score
     1 Lines = 40
