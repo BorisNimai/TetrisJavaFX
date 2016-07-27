@@ -46,16 +46,16 @@ public class Tetris extends Application{
     //[]     J
 
     //   []  T
-    // [][][] 
-    
+    // [][][]
+
 
     score
     1 Lines = 40
     2 Lines = 100
     3 Lines = 300
     4 Lines = 1200
-    
-    
+
+
     launch(args);
     }
 
@@ -65,6 +65,7 @@ public class Tetris extends Application{
 
         //Setup
         primaryStage.setTitle("Tetris");
+
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
@@ -75,28 +76,47 @@ public class Tetris extends Application{
         root.setCenter(tetrisArea);
 
         //temp , I think i will make a class out of this
-        // setup of board               
+        // setup of board
 
-        Canvas tempCanvas;       
+        Canvas tempCanvas;
         Canvas[][] tetrisTiles = new Canvas[10][20];
 
         GraphicsContext tgc;
         GraphicsContext[][] arrayGc = new GraphicsContext[10][20];
 
+        Board board = new Board();
+
+        int[] tetrimini = {4,5,6,6,5,5,5,6};
+        board.drawStationary(tetrimini);
+
+
+
+        Ttet ttet = new Ttet(board);
+        ttet.spawnTetrimino();
+        int[][] tegnBrett = board.returnBoard();
 
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 20; j++){
                 tempCanvas = new Canvas(20,20);
-                tetrisArea.add(tempCanvas ,i ,j);              
+                tetrisArea.add(tempCanvas ,i ,j);
                 tetrisTiles[i][j] = tempCanvas;
 
                 tgc = tempCanvas.getGraphicsContext2D();
                 arrayGc[i][j] = tgc;
 
-                tgc.setFill(Color.BLACK);
-                tgc.fillRect(0,0,tempCanvas.getWidth(),tempCanvas.getHeight());
-                tgc.setFill(Color.BLUE);
-                tgc.fillRect(2,2,tempCanvas.getWidth()-2,tempCanvas.getHeight()-2);
+                // if 0
+                if(tegnBrett[j+1][i] == 0){
+                    tgc.setFill(Color.BLACK);
+                    tgc.fillRect(0,0,tempCanvas.getWidth(),tempCanvas.getHeight());
+                    tgc.setFill(Color.BLUE);
+                    tgc.fillRect(2,2,tempCanvas.getWidth()-2,tempCanvas.getHeight()-2);
+                }
+                //if 1 ****
+                if(tegnBrett[j+1][i] == 1 || tegnBrett[j+1][i] >= 100){
+                    tgc.setFill(Color.RED);
+                    tgc.fillRect(0,0,tempCanvas.getWidth(),tempCanvas.getHeight());
+                }
+
             }
         }
 
@@ -112,29 +132,59 @@ public class Tetris extends Application{
         //GameLoop
         new AnimationTimer()
         {
-            int n = 2; // speed
-            int x = 0;
-            int y = 0;
-            int i = 0; //iterator
-            
-            
+            int[][] tegnBrett1;
+            int n = 30; // speed
+            int fi = 0; //iterator
+            int lft = 0;
+
             @Override
             public void handle(long currentNanoTime){
-                i++;
-                if(i%n == 0){
-                    x++;
-                    x = x % 10;
-                    if(x == 0){
-                        y++;
-                        y = y % 20;
+                fi++;
+                
+                if(fi%n == 0){
+                    ttet.timeStep();
+                    lft++;
+                    if(lft % 2 == 0){
+                        ttet.rotateLeft();
                     }
                 }
-                arrayGc[x][y].setFill(Color.RED);
 
-                arrayGc[x][y].fillRect(
-                    0,0,tetrisTiles[x][y].getWidth(),
-                    tetrisTiles[x][y].getHeight()
-                    );
+
+                tegnBrett1 = board.returnBoard();////////
+                //************************************************************
+                for(int i = 0; i < 10; i++){
+                    for(int j = 0; j < 20; j++){
+
+
+                        // if 0
+                        if(tegnBrett1[j+1][i] == 0){
+                            // tgc.setFill(Color.BLACK);
+                            //tgc.fillRect(0,0,tempCanvas.getWidth(),tempCanvas.getHeight());
+                            //tgc.setFill(Color.BLUE);
+                            //tgc.fillRect(2,2,tempCanvas.getWidth()-2,tempCanvas.getHeight()-2);
+
+                            arrayGc[i][j].setFill(Color.BLACK);
+                            arrayGc[i][j].fillRect(0,0,tetrisTiles[i][j].getWidth(),
+                                                   tetrisTiles[i][j].getHeight());
+
+                            arrayGc[i][j].setFill(Color.BLUE);
+                            arrayGc[i][j].fillRect(2,2,tetrisTiles[i][j].getWidth() - 2,
+                                                   tetrisTiles[i][j].getHeight() - 2);
+
+                        }
+                        //if 1 ****
+                        if(tegnBrett1[j+1][i] == 1 || tegnBrett1[j+1][i] >= 100){
+                            //tgc.setFill(Color.RED);
+                            //tgc.fillRect(0,0,tempCanvas.getWidth(),tempCanvas.getHeight());
+                            arrayGc[i][j].setFill(Color.RED);
+                            arrayGc[i][j].fillRect(0,0,tetrisTiles[i][j].getWidth(),
+                                                   tetrisTiles[i][j].getHeight());
+                        }
+                    }
+                }
+
+                //************************************************************
+
             }
         }.start();
 
