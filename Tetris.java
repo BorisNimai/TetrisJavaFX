@@ -136,17 +136,16 @@ public class Tetris extends Application{
             int n = 30; // speed
             int fi = 0; //iterator
             int lft = 0;
+            int lol = 0; //%%%%%%%%%%%%%
 
             @Override
             public void handle(long currentNanoTime){
                 fi++;
-                
+
                 if(fi%n == 0){
                     ttet.timeStep();
                     lft++;
-                    if(lft % 2 == 0){
-                        ttet.rotateLeft();
-                    }
+                    ttet.rotateLeft();
                 }
 
 

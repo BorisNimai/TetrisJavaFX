@@ -1,5 +1,10 @@
 class Board{
+
+    //Data****************************************************
+
     private int[][] gameBoard = new int[21][10];
+
+    //Methods**************************************************
 
     Board(){
         for(int i = 0; i<10;i++){
@@ -9,23 +14,30 @@ class Board{
         }
     }
 
-
     public boolean isThereFreeSpaceForShape(int[] positionXAndY){
         int x;
         int y;
-        int j;
-        for(int i = 0; i < positionXAndY.length / 2; i++){
-            j = 4 + i;
-            x = positionXAndY[i];
-            y = positionXAndY[j];
-            if(gameBoard[y][x] != 0){
+        for(int index = 0; index < 4; index++){
+            x = positionXAndY[index];
+            y = positionXAndY[index + 4];
+            if(y > 20 || x > 9 || x < 0){
                 return false;
+            }            
+            for(int i = 0; i < 10; i++){
+                for(int j = 0; j < 21 ; j++){
+                    if(gameBoard[y][x] < 100 &&  gameBoard[y][x] != 0){                        
+                        return false;
+                    }
+                }
             }
         }
         return true;
+
     }
 
+
     public void drawFalling(int[] positionXAndY){
+        deleteFalling();
         int x;
         int y;
         int j;
@@ -38,6 +50,7 @@ class Board{
     }
 
     public void drawStationary(int[] positionXAndY){
+        deleteFalling();
         int x;
         int y;
         int j;
@@ -59,27 +72,9 @@ class Board{
             }
         }
     }
-    
 
 
-
-
-    //ReturnBoard
-    /*
-      000l000000
-      000lll0000
-      ----------
-      0000000000
-      0000000000
-      0000000000
-      0000000000
-      .
-      .
-      .
-      1110000000
-      1101000000
-
-    */
+//ReturnBoard
 
     public int[][] returnBoard(){
         return gameBoard;
