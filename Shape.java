@@ -44,6 +44,30 @@ class Shape{
         return xAY;
     }
 
+    public int[] findGhostPosition(int[] fallingPositionXandY){
+        int[] testGhostFallingPosition = fallingPositionXandY;
+
+        while(true){
+            for(int i = 0; i < 4; i++){
+                if(testGhostFallingPosition[i + 4] == 20){
+                    return testGhostFallingPosition;
+                }
+            }
+
+            if(!board.isThereFreeSpaceForShape(testGhostFallingPosition)){// ta hensy til at rotasjonen går opp og ned
+                for(int j = 0; j < 4; j++){
+                    testGhostFallingPosition[j + 4] -= 1;
+                }
+                return testGhostFallingPosition;
+            }
+
+            for(int i = 0; i < 4; i++){
+                testGhostFallingPosition[i + 4] += 1;
+            }
+
+        }
+    }
+
 
 
     //Spawn
@@ -63,6 +87,7 @@ class Shape{
 
         if(board.isThereFreeSpaceForShape(xAndYPositions)){
             board.drawFalling(xAndYPositions);
+            board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
 
             //}
             for(int i = 0; i < xAndYPositions.length; i++){
@@ -78,6 +103,7 @@ class Shape{
             if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y+1))){
                 y += 1;
                 board.drawFalling(findElementPosition(state,tetrimino,x,y));
+                board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
                 falling = true;
             }else if(falling == true){
                 falling = false;
@@ -91,17 +117,23 @@ class Shape{
 
     //moveLeft
     public void moveLeft(){
-        if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x-1,y))){
-            // board.deleteFalling();
-            board.drawFalling(findElementPosition(state,tetrimino,x-1,y));
+        x--;
+        if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
+            board.drawFalling(findElementPosition(state,tetrimino,x,y));
+            board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
+        }else{
+            x++;
         }
     }
 
     //moveRight
     public void moveRight(){
-        if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x+1,y))){
-            // board.deleteFalling();
-            board.drawFalling(findElementPosition(state,tetrimino,x+1,y));
+        x++;
+        if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
+            board.drawFalling(findElementPosition(state,tetrimino,x,y));
+            board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
+        }else{
+            x--;
         }
     }
 
@@ -112,6 +144,8 @@ class Shape{
             if(state == -1) state = 3;
             if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
                 board.drawFalling(findElementPosition(state, tetrimino, x , y));
+                board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
+               
             }else{
                 state = (state == 3) ?  0 : state++;
             }
@@ -120,22 +154,18 @@ class Shape{
 
     //rotateRight
     public void rotateRight(){
-        // board.deleteFalling();
-        if(board.isThereFreeSpaceForShape(findElementPosition(state + 1 % 4, tetrimino, x , y))){
-            int oldState = state;
+        if(done == false){
             state++;
-            if(state == 4){
-                state = 0;
-            }
+            if(state == 4) state = 0;
             if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
-
+                board.drawFalling(findElementPosition(state, tetrimino, x , y));
+                board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
             }else{
-                state = oldState;
+                state = (state == 0) ?  3 : state--;
             }
-
-            board.drawFalling(findElementPosition(state, tetrimino, x , y));
         }
     }
+
 
     //drop
     public void drop(){
