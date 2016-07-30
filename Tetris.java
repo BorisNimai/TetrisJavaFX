@@ -86,7 +86,7 @@ public class Tetris extends Application{
 
         Board board = new Board();
 
-        int[] tetrimini = {4,5,6,6,5,5,5,6};
+        int[] tetrimini = {5,6,7,7,5,5,5,6};
         board.drawStationary(tetrimini);
 
 
@@ -145,16 +145,14 @@ public class Tetris extends Application{
                 if(fi%n == 0){
                     ttet.timeStep();
                     lft++;
-                    ttet.rotateLeft();
+                    ttet.rotateRight();
                 }
 
 
-                tegnBrett1 = board.returnBoard();////////
+                tegnBrett1 = board.returnBoard();////////                
                 //************************************************************
                 for(int i = 0; i < 10; i++){
-                    for(int j = 0; j < 20; j++){
-
-
+                    for(int j = 0; j < 20; j++){                      
                         // if 0
                         if(tegnBrett1[j+1][i] == 0){
                             // tgc.setFill(Color.BLACK);
@@ -178,6 +176,17 @@ public class Tetris extends Application{
                             arrayGc[i][j].setFill(Color.RED);
                             arrayGc[i][j].fillRect(0,0,tetrisTiles[i][j].getWidth(),
                                                    tetrisTiles[i][j].getHeight());
+                        }
+
+                        //if 2
+                        if(tegnBrett1[j+1][i] == -1){
+                            arrayGc[i][j].setFill(Color.DIMGRAY);
+                            arrayGc[i][j].fillRect(0,0,tetrisTiles[i][j].getWidth(),
+                                                   tetrisTiles[i][j].getHeight());
+
+                            arrayGc[i][j].setFill(Color.BLUE);
+                            arrayGc[i][j].fillRect(2,2,tetrisTiles[i][j].getWidth() - 2,
+                                                   tetrisTiles[i][j].getHeight() - 2);
                         }
                     }
                 }
