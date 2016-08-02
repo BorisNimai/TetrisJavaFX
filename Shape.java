@@ -7,14 +7,11 @@ class Shape{
     protected int y = -1;
     protected boolean falling = false;
     protected boolean done = false;
-//    protected int fallingFalseTimes = 0;
-
 
     protected int state = 0;
     protected ArrayList<Integer> tetrimino = new ArrayList<Integer>();
-    protected int dimentionX;
-    protected int dimentionY;
     protected Board board;
+    protected int colorID;
 
 
 
@@ -86,7 +83,7 @@ class Shape{
 
 
         if(board.isThereFreeSpaceForShape(xAndYPositions)){
-            board.drawFalling(xAndYPositions);
+            board.drawFalling(xAndYPositions,colorID);
             board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
 
             //}
@@ -102,13 +99,13 @@ class Shape{
         if(!done){
             if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y+1))){
                 y += 1;
-                board.drawFalling(findElementPosition(state,tetrimino,x,y));
+                board.drawFalling(findElementPosition(state,tetrimino,x,y),colorID);
                 board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
                 falling = true;
             }else if(falling == true){
                 falling = false;
             }else if(falling == false){
-                board.drawStationary(findElementPosition(state,tetrimino,x,y));
+                board.drawStationary(findElementPosition(state,tetrimino,x,y),colorID);
                 done = true;
             }
         }
@@ -117,35 +114,39 @@ class Shape{
 
     //moveLeft
     public void moveLeft(){
-        x--;
-        if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
-            board.drawFalling(findElementPosition(state,tetrimino,x,y));
-            board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
-        }else{
-            x++;
+        if(!done){
+            x--;
+            if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
+                board.drawFalling(findElementPosition(state,tetrimino,x,y),colorID);
+                board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
+            }else{
+                x++;
+            }
         }
     }
 
     //moveRight
     public void moveRight(){
-        x++;
-        if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
-            board.drawFalling(findElementPosition(state,tetrimino,x,y));
-            board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
-        }else{
-            x--;
+        if(!done){
+            x++;
+            if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
+                board.drawFalling(findElementPosition(state,tetrimino,x,y),colorID);
+                board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
+            }else{
+                x--;
+            }
         }
     }
 
     //rotateLeft
     public void rotateLeft(){
-        if(done == false){
+        if(!done){
             state--;
             if(state == -1) state = 3;
             if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
-                board.drawFalling(findElementPosition(state, tetrimino, x , y));
+                board.drawFalling(findElementPosition(state, tetrimino, x , y),colorID);
                 board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
-               
+
             }else{
                 state = (state == 3) ?  0 : state++;
             }
@@ -154,11 +155,11 @@ class Shape{
 
     //rotateRight
     public void rotateRight(){
-        if(done == false){
+        if(!done){
             state++;
             if(state == 4) state = 0;
             if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
-                board.drawFalling(findElementPosition(state, tetrimino, x , y));
+                board.drawFalling(findElementPosition(state, tetrimino, x , y),colorID);
                 board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
             }else{
                 state = (state == 0) ?  3 : state--;
@@ -169,12 +170,14 @@ class Shape{
 
     //drop
     public void drop(){
-
+        board.drawStationary(findGhostPosition(findElementPosition(state,tetrimino,x,y)),colorID);
+        done = true;
     }
+    
 
     //Status -- If there is a tetrimino falling or not
     public boolean status(){
-        return true;
+        return done;
     }
 
     // shapes know their position, they take in (game board from this class)

@@ -108,7 +108,7 @@ class DrawBoard{
 	    arrayGc[i][j].setFill(Color.ORANGE);
             break;
 
-            // O shape --> gul
+            //  O shape --> gul
         case 4: case 104:
 	    arrayGc[i][j].setFill(Color.YELLOW);
             break;

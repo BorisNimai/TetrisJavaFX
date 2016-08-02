@@ -80,7 +80,7 @@ class Board{
     }
 
 
-    public void drawFalling(int[] positionXAndY){
+    public void drawFalling(int[] positionXAndY, int colorID){
         deleteFalling();
         deleteGhost();
         int x;
@@ -88,11 +88,11 @@ class Board{
         for(int i = 0; i < positionXAndY.length / 2; i++){
             x = positionXAndY[i];
             y = positionXAndY[i + 4];
-            gameBoard[y][x] = 100; // + colorIdNumber;
+            gameBoard[y][x] = 100 + colorID;
         }
     }
 
-    public void drawStationary(int[] positionXAndY){
+    public void drawStationary(int[] positionXAndY, int colorID){
         deleteFalling();
         deleteGhost();
         int x;
@@ -100,7 +100,7 @@ class Board{
         for(int i = 0; i < positionXAndY.length / 2; i++){
             x = positionXAndY[i];
             y = positionXAndY[i + 4];
-            gameBoard[y][x] = 1; // + colorIdNumber;
+            gameBoard[y][x] = colorID; // maybe rename colorID --> colorIdNumber;
         }
     }
 

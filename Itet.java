@@ -9,8 +9,9 @@ class Itet extends Shape{
     // [ ][ ][ ][ ]   [ ][ ][1][ ]    [1][1][1][1]    [ ][1][ ][ ]
     // [ ][ ][ ][ ]   [ ][ ][1][ ]    [ ][ ][ ][ ]    [ ][1][ ][ ]
 
-      Itet(){
-        this.tetrimino.addAll(Arrays.asList(0,0,0,0,   //[ ][ ][ ][ ]/
+      Itet(Board board){
+	  this.board = board;
+	  this.tetrimino.addAll(Arrays.asList(0,0,0,0,   //[ ][ ][ ][ ]/
                                             1,1,1,1,   //[1][1][1][1]/ 1
                                             0,0,0,0,   //[ ][ ][ ][ ]/
                                             0,0,0,0,   //[ ][ ][ ][ ]/
@@ -29,5 +30,6 @@ class Itet extends Shape{
                                             0,1,0,0,   //[ ][1][ ][ ]: 4
                                             0,1,0,0,   //[ ][1][ ][ ]:
                                             0,1,0,0)); //[ ][1][ ][ ]:
-    }
+	colorID = 1;
+      }
 }

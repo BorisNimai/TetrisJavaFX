@@ -8,7 +8,8 @@ class Jtet extends Shape{
     // [ ][ ][ ][ ][1][1][ ][ ][ ][ ]
     // [ ][ ][ ][1][1][ ][ ][ ][ ][ ]
 
-    Jtet(){
+    Jtet(Board board){
+	this.board = board;
         this.tetrimino.addAll(Arrays.asList(0,1,1,   //[ ][1][1]/
                                             1,1,0,   //[1][1][ ]/ 1
                                             0,0,0,   //[ ][ ][ ]/
@@ -24,8 +25,7 @@ class Jtet extends Shape{
                                             1,0,0,   //[1][ ][ ]:
                                             1,1,0,   //[1][1][ ]: 4
                                             0,1,0)); //[ ][1][ ]:
-        this.dimentionX = 3;
-        this.dimentiony = 3;
+	colorID = 2;
     }
     
 }

@@ -5,7 +5,8 @@ class Ztet extends Shape{
     //    [ ][1][1]      [ ][1][1]       [1][1][ ]       [1][1][ ]
     //    [ ][ ][ ]      [ ][1][ ]       [ ][1][1]       [1][ ][ ]
 
-    Ztet(){
+    Ztet(Board board){
+	this.board = board;
         this.tetrimino.addAll(Arrays.asList(1,1,0,   //[1][1][ ]/
                                             0,1,1,   //[ ][1][1]/ 1
                                             0,0,0,   //[ ][ ][ ]/
@@ -21,6 +22,7 @@ class Ztet extends Shape{
                                             0,1,0,   //[ ][1][ ]:
                                             1,1,0,   //[1][1][ ]: 4
                                             1,0,0)); //[1][ ][ ]:
+	colorID = 7;
     }
     
 }

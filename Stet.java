@@ -5,7 +5,8 @@ class Stet extends Shape{
     // [1][1][ ]      [ ][1][1]       [ ][1][1]       [1][1][ ]
     // [ ][ ][ ]      [ ][ ][1]       [1][1][ ]       [ ][1][ ]
 
-    Stet(){
+    Stet(Board board){
+	this.board = board;
         this.tetrimino.addAll(Arrays.asList(0,1,1,   //[ ][1][1]/
                                             1,1,0,   //[1][1][ ]/ 1
                                             0,0,0,   //[ ][ ][ ]/
@@ -21,5 +22,6 @@ class Stet extends Shape{
                                             1,0,0,   //[1][ ][ ]:
                                             1,1,0,   //[1][1][ ]: 4
                                             0,1,0)); //[ ][1][ ]:
+	colorID = 5;
     }    
 }
