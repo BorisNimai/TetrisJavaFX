@@ -17,7 +17,7 @@ class DrawBoard{
         this.board = board;
         this.tetrisGrid = tetrisGrid;
         setUp();
-	paintBoard();
+        paintBoard();
     }
 
 
@@ -48,7 +48,7 @@ class DrawBoard{
     }
 
 
-    
+
 
 
     public void paintBoard(){
@@ -69,7 +69,7 @@ class DrawBoard{
                 }
                 //if occupied
                 if(tegnBrett[j+1][i] >= 1){
-                    arrayGc[i][j].setFill(getColor(tegnBrett[j+1][i])); // im using getColor here. Problem here maybe have to move entire line into getColor method and make it void
+                    findColor(tegnBrett[j+1][i],i,j);
                     arrayGc[i][j].fillRect(0,0,tetrisTiles[i][j].getWidth(),
                                            tetrisTiles[i][j].getHeight());
                 }
@@ -89,52 +89,50 @@ class DrawBoard{
 
     }
 
-    public Color getColor(int colorID){
-        Color color = Color.BLACK;
+    private void findColor(int colorID, int i, int j){
 
         switch (colorID) {
 
             // I shape --> Isblå
         case 1: case 101: case 100: // case 100: just for testing sake
-            color = Color.LIGHTCYAN;	    
-	    break;
+            arrayGc[i][j].setFill(Color.CYAN);
+            break;
 
             // J shape --> mørkeblå
         case 2: case 102:
-            color = Color.LIGHTSKYBLUE;
+	    arrayGc[i][j].setFill(Color.ROYALBLUE);
             break;
 
             // L shape --> orange
         case 3: case 103:
-            color = Color.ORANGE;
+	    arrayGc[i][j].setFill(Color.ORANGE);
             break;
 
             // O shape --> gul
         case 4: case 104:
-            color = Color.YELLOW;
+	    arrayGc[i][j].setFill(Color.YELLOW);
             break;
 
             // S shape --> Grøn
         case 5: case 105:
-            color = Color.GREEN;
+	    arrayGc[i][j].setFill(Color.GREEN);
             break;
 
             // T shape --> lilla
         case 6: case 106:
-            color = Color.PURPLE;
+	    arrayGc[i][j].setFill(Color.PURPLE);
             break;
 
             // z shape --> rød
         case 7: case 107:
-            color = Color.RED;
+	    arrayGc[i][j].setFill(Color.RED);
             break;
 
         default:
-            color = Color.BLACK;
+	    arrayGc[i][j].setFill(Color.BLACK);
             break;
         }
-	System.out.println(color);
-        return color;
+
     }
 
     public void setBoard(Board board){
