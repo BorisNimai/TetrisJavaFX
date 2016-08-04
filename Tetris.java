@@ -38,10 +38,8 @@ public class Tetris extends Application{
        }
 
     */
-    static int n = 30; //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
     public void start(Stage primaryStage){
-
 
         //Setup
         primaryStage.setTitle("Tetris");
@@ -59,12 +57,12 @@ public class Tetris extends Application{
 
 
 
-//        int[] tetrimini = {5,6,7,7,5,5,5,6};////
-//        board.drawStationary(tetrimini, 4);////
+        int[] tetrimini = {5,6,7,7,5,5,5,6};////
+        board.drawStationary(tetrimini, 4);////
 
 
-        // Ttet ttet = new Ttet(board);////
-        // ttet.spawnTetrimino();/////
+        Ttet ttet = new Ttet(board);////
+        ttet.spawnTetrimino();/////
 
 
         DrawBoard drawBoard = new DrawBoard(tetrisGrid, board);
@@ -80,83 +78,62 @@ public class Tetris extends Application{
                         input.add(code);
                         System.out.println(code);
                     }
-		    if(input.contains("DOWN")){
-			input.remove("DOWN");
-			n = 30;
-		    }
-                }
-            });
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-                public void handle(KeyEvent e){
-                    String code = e.getCode().toString();
-                    if((!input.contains(code)) && (code.compareTo("DOWN") == 0)){
-                        input.add(code);
-                        System.out.println(code);
-                    }
                 }
             });
 
         ///game bag
         Random rand = new Random();
-        int m;
+        int n;
         ArrayList<Shape> tetriminoBag = new ArrayList<Shape>();
-/*
-  for(int i = 0; i < 7; i++){
-  m = rand.nextInt(6);
-  switch(m){
-  case 0:
-  tetriminoBag.add(new Itet(board));
-  break;
-  case 1:
-  tetriminoBag.add(new Jtet(board));
-  break;
-  case 2:
-  tetriminoBag.add(new Ltet(board));
-  break;
-  case 3:
-  tetriminoBag.add(new Otet(board));
-  break;
-  case 4:
-  tetriminoBag.add(new Stet(board));
-  break;
-  case 5:
-  tetriminoBag.add(new Ttet(board));
-  break;
-  case 6:
-  tetriminoBag.add(new Ztet(board));
-  break;
-  }
-  }
-*/
 
-        tetriminoBag.add(new Stet(board));
-        tetriminoBag.add(new Ttet(board));
-        tetriminoBag.add(new Ttet(board));
-        tetriminoBag.add(new Stet(board));
-        tetriminoBag.add(new Jtet(board));
-        tetriminoBag.add(new Otet(board));
-        tetriminoBag.get(0).spawnTetrimino();
+        for(int i = 0; i < 7; i++){
+            n = rand.nextInt(6);
+            switch(n){
+            case 0:
+                tetriminoBag.add(new Itet(board));
+                break;
+            case 1:
+                tetriminoBag.add(new Jtet(board));
+                break;
+            case 2:
+                tetriminoBag.add(new Ltet(board));
+                break;
+            case 3:
+                tetriminoBag.add(new Otet(board));
+                break;
+            case 4:
+                tetriminoBag.add(new Stet(board));
+                break;
+            case 5:
+                tetriminoBag.add(new Ttet(board));
+                break;
+            case 6:
+                tetriminoBag.add(new Ztet(board));
+                break;
+            }
+        }
+
+	
+
 
         //GameLoop
         new AnimationTimer()
         {
             int[][] tegnBrett1;//ææææææææææææææææææææææ
-            //int n = 30; // speed 30
+            int n = 30; // speed
             int fi = 0; //iterator
             int lft = 0;
             int lol = 0; //%%%%%%%%%%%%%
-            int tetriminoCounter = 0;
-
+	    int tetriminoCounter = 0;
+	    
             @Override
             public void handle(long currentNanoTime){
-                if(tetriminoBag.get(tetriminoCounter).status()){
-                    tetriminoCounter++;
-                    tetriminoBag.get(tetriminoCounter).spawnTetrimino();
-                }
-
-                fi++;
-
+		if(tetriminoBag.get(tetriminoCounter).status()){
+		    tetriminoCounter++;
+		}
+		
+		fi++;
+		
                 // move left
                 if(input.contains("LEFT")){
                     tetriminoBag.get(tetriminoCounter).moveLeft();
@@ -180,18 +157,12 @@ public class Tetris extends Application{
                     tetriminoBag.get(tetriminoCounter).rotateLeft();
                     input.remove("Z");
                 }
-
+		
                 //rotate right
                 if(input.contains("X")){
                     tetriminoBag.get(tetriminoCounter).rotateRight();
                     input.remove("X");
                 }
-
-                if(input.contains("DOWN")){
-		    n = 5;
-		    input.remove("DOWN");
-                }
-
 
                 //hold (c)
 
