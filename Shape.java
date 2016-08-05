@@ -57,7 +57,7 @@ class Shape{
             }
 
             // if it detect that is not free space
-            if(!board.isThereFreeSpaceForShape(testGhostFallingPosition)){// ta hensy til at rotasjonen går opp og ned
+            if(!board.isThereFreeSpaceForShape(testGhostFallingPosition)){
                 for(int j = 0; j < 4; j++){
                     testGhostFallingPosition[j + 4] -= 1;
                 }
@@ -178,12 +178,21 @@ class Shape{
                 }
                 // NO
                 else{
-                    //DO NOTHING "RESET"
-                    state = preState;
+                    System.out.println("Rotate Left is Not happning"); // tester for rotation on ground
+                    if(rotateOnGround(xAY, preState)){
+			System.out.println("ITs happning");
+                        board.drawFalling(findElementPosition(state,tetrimino,x,y),colorID);
+                    }else{
+                        //DO NOTHING "RESET"
+                        state = preState;
+                    }
                 }
             }
         }
     }
+
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 
     //rotateLeft //counter clockwise
@@ -217,14 +226,38 @@ class Shape{
                 }
                 // NO
                 else{
-                    //DO NOTHING "RESET"
-                    state = preState;
+                    System.out.println("Rotate Right Not happning"); // tester for rotation on ground
+                    if(rotateOnGround(xAY, preState)){
+			System.out.println("IT's happning");
+                        board.drawFalling(findElementPosition(state,tetrimino,x,y),colorID);
+                    }else{
+                        //DO NOTHING "RESET"
+                        state = preState;
+                    }
                 }
             }
         }
     }
 
-
+    //Helper Method  //finn den nederste "brikken før rotasjonen", finn ut om brukken  er under
+    // etter rotasjonen om så bomp tetrimnoen oppover , må teste at det går ann å bompe oppover
+    private boolean rotateOnGround(int[] xAY, int preState){
+        int[] oldXAY = findElementPosition(preState,tetrimino,x,y);
+        //IF ON GROUND OR ON TETRIMINO
+        if(findGhostPosition(oldXAY) == oldXAY){
+            for(int i = 0; i < 4; i++){
+                if(xAY[i+4] > oldXAY[i+4]){
+                    y--;
+                    if(board.isThereFreeSpaceForShape(findElementPosition(state,tetrimino,x,y))){
+                        return true;
+                    }else{
+                        y++;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     //HELPER METHOD
     private boolean pullAwayFromWall(int[] xAY){
@@ -233,14 +266,14 @@ class Shape{
                 x++;
                 return true;
             }
-	    if(xAY[i] == 10){
-		x--;
-		return true;
-	    }
+            if(xAY[i] == 10){
+                x--;
+                return true;
+            }
         }
         return false;
     }
-    
+
 //********************************************************************************
 //********************************************************************************
 

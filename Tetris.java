@@ -136,12 +136,24 @@ public class Tetris extends Application{
         tetriminoBag.add(new Stet(board));
         tetriminoBag.add(new Jtet(board));
         tetriminoBag.add(new Otet(board));
+	 tetriminoBag.add(new Stet(board));
+        tetriminoBag.add(new Ttet(board));
+        tetriminoBag.add(new Ttet(board));
+        tetriminoBag.add(new Stet(board));
+        tetriminoBag.add(new Jtet(board));
+        tetriminoBag.add(new Otet(board));
+	 tetriminoBag.add(new Stet(board));
+        tetriminoBag.add(new Ttet(board));
+        tetriminoBag.add(new Ttet(board));
+        tetriminoBag.add(new Stet(board));
+        tetriminoBag.add(new Jtet(board));
+        tetriminoBag.add(new Otet(board));
         tetriminoBag.get(0).spawnTetrimino();
 
         //GameLoop
         new AnimationTimer()
         {
-            int[][] tegnBrett1;//ææææææææææææææææææææææ
+            int[][] tegnBrett1;//ææææææææææææææææææææææææææææææ
             //int n = 30; // speed 30
             int fi = 0; //iterator
             int lft = 0;
