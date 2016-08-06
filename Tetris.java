@@ -26,19 +26,13 @@ import java.util.Random;
 
 public class Tetris extends Application{
     /* public static void main(String args[]){
-
-       score
-       1 Lines = 40
-       2 Lines = 100
-       3 Lines = 300
-       4 Lines = 1200
-
-
        launch(args);
        }
 
     */
-    static int n = 30; //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    static public int speed = 60; //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    static public int ogSpeed = 60;
+
 
     public void start(Stage primaryStage){
 
@@ -56,16 +50,7 @@ public class Tetris extends Application{
         root.setCenter(tetrisGrid);
 
         Board board = new Board();
-
-
-
-//        int[] tetrimini = {5,6,7,7,5,5,5,6};////
-//        board.drawStationary(tetrimini, 4);////
-
-
-        // Ttet ttet = new Ttet(board);////
-        // ttet.spawnTetrimino();/////
-
+	Score score = new Score(0, board);
 
         DrawBoard drawBoard = new DrawBoard(tetrisGrid, board);
 
@@ -80,10 +65,10 @@ public class Tetris extends Application{
                         input.add(code);
                         System.out.println(code);
                     }
-		    if(input.contains("DOWN")){
-			input.remove("DOWN");
-			n = 30;
-		    }
+                    if(input.contains("DOWN")){
+                        input.remove("DOWN");
+                        speed = ogSpeed;
+                    }
                 }
             });
 
@@ -101,48 +86,48 @@ public class Tetris extends Application{
         Random rand = new Random();
         int m;
         ArrayList<Shape> tetriminoBag = new ArrayList<Shape>();
-/*
-  for(int i = 0; i < 7; i++){
-  m = rand.nextInt(6);
-  switch(m){
-  case 0:
-  tetriminoBag.add(new Itet(board));
-  break;
-  case 1:
-  tetriminoBag.add(new Jtet(board));
-  break;
-  case 2:
-  tetriminoBag.add(new Ltet(board));
-  break;
-  case 3:
-  tetriminoBag.add(new Otet(board));
-  break;
-  case 4:
-  tetriminoBag.add(new Stet(board));
-  break;
-  case 5:
-  tetriminoBag.add(new Ttet(board));
-  break;
-  case 6:
-  tetriminoBag.add(new Ztet(board));
-  break;
-  }
-  }
-*/
 
+        for(int i = 0; i < 7; i++){
+            m = rand.nextInt(6);
+            switch(m){
+            case 0:
+                tetriminoBag.add(new Itet(board));
+                break;
+            case 1:
+                tetriminoBag.add(new Jtet(board));
+                break;
+            case 2:
+                tetriminoBag.add(new Ltet(board));
+                break;
+            case 3:
+                tetriminoBag.add(new Otet(board));
+                break;
+            case 4:
+                tetriminoBag.add(new Stet(board));
+                break;
+            case 5:
+                tetriminoBag.add(new Ttet(board));
+                break;
+            case 6:
+                tetriminoBag.add(new Ztet(board));
+                break;
+            }
+        }
+	
+	
         tetriminoBag.add(new Stet(board));
         tetriminoBag.add(new Ttet(board));
         tetriminoBag.add(new Ttet(board));
         tetriminoBag.add(new Stet(board));
         tetriminoBag.add(new Jtet(board));
         tetriminoBag.add(new Otet(board));
-	 tetriminoBag.add(new Stet(board));
+        tetriminoBag.add(new Stet(board));
         tetriminoBag.add(new Ttet(board));
         tetriminoBag.add(new Ttet(board));
         tetriminoBag.add(new Stet(board));
         tetriminoBag.add(new Jtet(board));
         tetriminoBag.add(new Otet(board));
-	 tetriminoBag.add(new Stet(board));
+        tetriminoBag.add(new Stet(board));
         tetriminoBag.add(new Ttet(board));
         tetriminoBag.add(new Ttet(board));
         tetriminoBag.add(new Stet(board));
@@ -153,11 +138,7 @@ public class Tetris extends Application{
         //GameLoop
         new AnimationTimer()
         {
-            int[][] tegnBrett1;//ææææææææææææææææææææææææææææææ
-            //int n = 30; // speed 30
-            int fi = 0; //iterator
-            int lft = 0;
-            int lol = 0; //%%%%%%%%%%%%%
+            int fi = 0; //iterator\
             int tetriminoCounter = 0;
 
             @Override
@@ -167,9 +148,13 @@ public class Tetris extends Application{
                     tetriminoBag.get(tetriminoCounter).spawnTetrimino();
                 }
 
+	     
                 fi++;
 
-                // move left
+
+		//INPUT
+		
+		// move left
                 if(input.contains("LEFT")){
                     tetriminoBag.get(tetriminoCounter).moveLeft();
                     input.remove("LEFT");
@@ -200,22 +185,23 @@ public class Tetris extends Application{
                 }
 
                 if(input.contains("DOWN")){
-		    n = 5;
-		    input.remove("DOWN");
+                    speed = 1;
+                    input.remove("DOWN");
                 }
 
 
                 //hold (c)
 
-                // down (softdrop )
-
                 // pause esc
 
 
-
-                if(fi%n == 0){
+		//TIME STEP
+		if(fi%speed == 0){
                     tetriminoBag.get(tetriminoCounter).timeStep();
-                }
+		}
+
+		//Removes lines and calculates the score
+		score.calculateScore();
 
                 drawBoard.paintBoard();
 

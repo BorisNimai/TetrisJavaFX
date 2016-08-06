@@ -125,6 +125,33 @@ class Board{
         }
     }
 
+    public int clearLines(){
+        int xCounter;
+        int linesClered = 0;
+        for(int y = 0; y < 21; y++){
+            xCounter = 0;
+            for(int x = 0; x < 10; x++){
+                if(gameBoard[y][x] > 0 && gameBoard[y][x] < 80){
+                    xCounter++;
+                }
+            }
+            if(xCounter == 10){
+                linesClered++;
+                removeLine(y);
+            }
+        }
+        return linesClered;
+    }
+
+    //copy line over down recrucive method
+    private void removeLine(int lineNumber){
+        if(lineNumber > 0){
+            for(int i = 0; i < 10; i++){
+		gameBoard[lineNumber][i] = gameBoard[lineNumber - 1][i];
+            }
+	    removeLine(lineNumber - 1);
+        }
+    }
 
 //ReturnBoard
 

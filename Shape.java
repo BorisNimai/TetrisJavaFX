@@ -72,8 +72,6 @@ class Shape{
         }
     }
 
-
-
     //Spawn
     // spanw a new tetrimino on the board
     public void spawnTetrimino() { // throw exception here later
@@ -99,7 +97,6 @@ class Shape{
             }
         }
     }
-
 
     //timeStep
     public void timeStep(){

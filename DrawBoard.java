@@ -48,9 +48,6 @@ class DrawBoard{
     }
 
 
-
-
-
     public void paintBoard(){
         int[][] tegnBrett = board.returnBoard();
 
@@ -63,15 +60,31 @@ class DrawBoard{
                     arrayGc[i][j].fillRect(0,0,tetrisTiles[i][j].getWidth(),
                                            tetrisTiles[i][j].getHeight());
 
-                    arrayGc[i][j].setFill(Color.BLUE);
+                    arrayGc[i][j].setFill(Color.NAVY); //BLUE
+                    arrayGc[i][j].fillRect(2,2,tetrisTiles[i][j].getWidth() - 2,
+                                           tetrisTiles[i][j].getHeight() - 2);
+
+		    
+                    arrayGc[i][j].setFill(Color.rgb(1,1,1,0.2)); //BLUE
                     arrayGc[i][j].fillRect(2,2,tetrisTiles[i][j].getWidth() - 2,
                                            tetrisTiles[i][j].getHeight() - 2);
                 }
                 //if occupied
                 if(tegnBrett[j+1][i] >= 1){
-                    findColor(tegnBrett[j+1][i],i,j);
+
+                    arrayGc[i][j].setFill(Color.GRAY);
                     arrayGc[i][j].fillRect(0,0,tetrisTiles[i][j].getWidth(),
                                            tetrisTiles[i][j].getHeight());
+
+                    findColor(tegnBrett[j+1][i],i,j);
+                    arrayGc[i][j].fillRect(1,1,tetrisTiles[i][j].getWidth(),
+                                           tetrisTiles[i][j].getHeight());
+		    //If stationary 200 200 200 0.4
+		    if(tegnBrett[j+1][i] < 100){
+                    arrayGc[i][j].setFill(Color.rgb(50,50,50,0.2)); //BLUE
+                    arrayGc[i][j].fillRect(2,2,tetrisTiles[i][j].getWidth() - 2,
+                                           tetrisTiles[i][j].getHeight() - 2);
+		    }
                 }
 
                 //if Ghost
@@ -80,9 +93,10 @@ class DrawBoard{
                     arrayGc[i][j].fillRect(0,0,tetrisTiles[i][j].getWidth(),
                                            tetrisTiles[i][j].getHeight());
 
-                    arrayGc[i][j].setFill(Color.BLUE);
+                    arrayGc[i][j].setFill(Color.NAVY); //BLUE
                     arrayGc[i][j].fillRect(2,2,tetrisTiles[i][j].getWidth() - 2,
                                            tetrisTiles[i][j].getHeight() - 2);
+
                 }
             }
         }
@@ -100,36 +114,36 @@ class DrawBoard{
 
             // J shape --> mørkeblå
         case 2: case 102:
-	    arrayGc[i][j].setFill(Color.ROYALBLUE);
+            arrayGc[i][j].setFill(Color.ROYALBLUE);
             break;
 
             // L shape --> orange
         case 3: case 103:
-	    arrayGc[i][j].setFill(Color.ORANGE);
+            arrayGc[i][j].setFill(Color.ORANGE);
             break;
 
             //  O shape --> gul
         case 4: case 104:
-	    arrayGc[i][j].setFill(Color.YELLOW);
+            arrayGc[i][j].setFill(Color.YELLOW);
             break;
 
             // S shape --> Grøn
         case 5: case 105:
-	    arrayGc[i][j].setFill(Color.GREEN);
+            arrayGc[i][j].setFill(Color.GREEN);
             break;
 
             // T shape --> lilla
         case 6: case 106:
-	    arrayGc[i][j].setFill(Color.PURPLE);
+            arrayGc[i][j].setFill(Color.PURPLE);
             break;
 
             // z shape --> rød
         case 7: case 107:
-	    arrayGc[i][j].setFill(Color.RED);
+            arrayGc[i][j].setFill(Color.RED);
             break;
 
         default:
-	    arrayGc[i][j].setFill(Color.BLACK);
+            arrayGc[i][j].setFill(Color.BLACK);
             break;
         }
 
