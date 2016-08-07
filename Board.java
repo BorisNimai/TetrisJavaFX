@@ -147,16 +147,26 @@ class Board{
     private void removeLine(int lineNumber){
         if(lineNumber > 0){
             for(int i = 0; i < 10; i++){
-		gameBoard[lineNumber][i] = gameBoard[lineNumber - 1][i];
+                gameBoard[lineNumber][i] = gameBoard[lineNumber - 1][i];
             }
-	    removeLine(lineNumber - 1);
+            removeLine(lineNumber - 1);
         }
     }
 
-//ReturnBoard
+    //ReturnBoard
 
     public int[][] returnBoard(){
         return gameBoard;
     }
+
+    public boolean gameOver(){
+	for(int i =0 ; i < 10; i++){
+	    if(gameBoard[0][i] > 0 && gameBoard[0][i] < 100){
+		return true;
+	    }	    
+	}
+	return false;
+    }
+
 
 }

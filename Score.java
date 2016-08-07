@@ -52,8 +52,9 @@ class Score{
 
     public void calculateScore(){
 	int lines = board.clearLines();
+	if(lines == 4) System.out.println(lines); // fdsfjdsklfjskldjfkl
 	if(lines != 0){	    
-	    score += linesClearScore[lines] * (lvl + 1);
+	    score += linesClearScore[lines - 1] * (lvl + 1);
 	    linesClear += lines;
 	    setLvl();
 	    setSpeed();

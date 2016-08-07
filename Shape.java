@@ -16,7 +16,7 @@ class Shape{
     protected boolean leftGard = false;
     protected boolean rightGard = false;
 
-
+    private boolean gameOver = false;
 
 
 
@@ -25,15 +25,15 @@ class Shape{
 
     // findElementPosition takes in state, tetriminodata and position on the board for the tetrimio grid
     // and return array with position fot each element in the tetrimino
-    private int[] findElementPosition(int lstate,
-                                      ArrayList<Integer> ltetrimino,
-                                      int midPosX, int midPosY){
+    protected int[] findElementPosition(int lstate,
+                                        ArrayList<Integer> ltetrimino,
+                                        int midPosX, int midPosY){
         int[] xAY = new int[8];
         int counter = 0;
         int startPositionX = midPosX - 1;
         int startPositionY = midPosY - 1;
         int yPositionHelper;
-
+	
         for(int i  = lstate * 9; i < (lstate + 1) * 9; i++){
             if(ltetrimino.get(i) != 0){
                 xAY[counter] = i % 3 + startPositionX;
@@ -92,10 +92,12 @@ class Shape{
             board.drawGhost(findGhostPosition(findElementPosition(state,tetrimino,x,y)));
 
             //}
-            for(int i = 0; i < xAndYPositions.length; i++){
-                System.out.println(xAndYPositions[i]);
-            }
         }
+
+	if(board.gameOver()){
+	    gameOver = true;
+	}
+	
     }
 
     //timeStep
@@ -177,7 +179,7 @@ class Shape{
                 else{
                     System.out.println("Rotate Left is Not happning"); // tester for rotation on ground
                     if(rotateOnGround(xAY, preState)){
-			System.out.println("ITs happning");
+                        System.out.println("ITs happning");
                         board.drawFalling(findElementPosition(state,tetrimino,x,y),colorID);
                     }else{
                         //DO NOTHING "RESET"
@@ -225,7 +227,7 @@ class Shape{
                 else{
                     System.out.println("Rotate Right Not happning"); // tester for rotation on ground
                     if(rotateOnGround(xAY, preState)){
-			System.out.println("IT's happning");
+                        System.out.println("IT's happning");
                         board.drawFalling(findElementPosition(state,tetrimino,x,y),colorID);
                     }else{
                         //DO NOTHING "RESET"
@@ -287,6 +289,15 @@ class Shape{
         return done;
     }
 
+    public boolean getGameOverStatus(){
+	return gameOver;
+    }
+
     // shapes know their position, they take in (game board from this class)
+
+    //getColorId
+    public int getColorId(){
+	return colorID;
+    }
 
 }

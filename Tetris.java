@@ -6,6 +6,7 @@ import javafx.scene.Group;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 
 import javafx.scene.canvas.Canvas;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
-import java.util.Random;
+//import java.util.Random;
 
 
 public class Tetris extends Application{
@@ -32,6 +33,8 @@ public class Tetris extends Application{
     */
     static public int speed = 60; //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     static public int ogSpeed = 60;
+    ArrayList<Shape> tetriminoBag;
+    
 
 
     public void start(Stage primaryStage){
@@ -47,11 +50,20 @@ public class Tetris extends Application{
 
         // Tetris "canvas" setup
         GridPane tetrisGrid = new GridPane();
+
+	VBox rightSide = new VBox();
         root.setCenter(tetrisGrid);
+        root.setRight(rightSide);
+
+	
+
 
         Board board = new Board();
-	Score score = new Score(0, board);
+        Score score = new Score(0, board);
 
+	//RIGHT SIDE MENU class
+	RightSideOfBoard rsob = new RightSideOfBoard(rightSide,tetriminoBag,score);
+	
         DrawBoard drawBoard = new DrawBoard(tetrisGrid, board);
 
         ArrayList<String> input = new ArrayList<String>();
@@ -83,128 +95,98 @@ public class Tetris extends Application{
             });
 
         ///game bag
-        Random rand = new Random();
-        int m;
-        ArrayList<Shape> tetriminoBag = new ArrayList<Shape>();
+        Bag bag = new Bag(board);
 
-        for(int i = 0; i < 7; i++){
-            m = rand.nextInt(6);
-            switch(m){
-            case 0:
-                tetriminoBag.add(new Itet(board));
-                break;
-            case 1:
-                tetriminoBag.add(new Jtet(board));
-                break;
-            case 2:
-                tetriminoBag.add(new Ltet(board));
-                break;
-            case 3:
-                tetriminoBag.add(new Otet(board));
-                break;
-            case 4:
-                tetriminoBag.add(new Stet(board));
-                break;
-            case 5:
-                tetriminoBag.add(new Ttet(board));
-                break;
-            case 6:
-                tetriminoBag.add(new Ztet(board));
-                break;
-            }
-        }
-	
-	
-        tetriminoBag.add(new Stet(board));
-        tetriminoBag.add(new Ttet(board));
-        tetriminoBag.add(new Ttet(board));
-        tetriminoBag.add(new Stet(board));
-        tetriminoBag.add(new Jtet(board));
-        tetriminoBag.add(new Otet(board));
-        tetriminoBag.add(new Stet(board));
-        tetriminoBag.add(new Ttet(board));
-        tetriminoBag.add(new Ttet(board));
-        tetriminoBag.add(new Stet(board));
-        tetriminoBag.add(new Jtet(board));
-        tetriminoBag.add(new Otet(board));
-        tetriminoBag.add(new Stet(board));
-        tetriminoBag.add(new Ttet(board));
-        tetriminoBag.add(new Ttet(board));
-        tetriminoBag.add(new Stet(board));
-        tetriminoBag.add(new Jtet(board));
-        tetriminoBag.add(new Otet(board));
+        bag.generateBag();
+        tetriminoBag = bag.getBag();
         tetriminoBag.get(0).spawnTetrimino();
 
+
+	
         //GameLoop
         new AnimationTimer()
         {
             int fi = 0; //iterator\
             int tetriminoCounter = 0;
 
+
             @Override
             public void handle(long currentNanoTime){
-                if(tetriminoBag.get(tetriminoCounter).status()){
-                    tetriminoCounter++;
-                    tetriminoBag.get(tetriminoCounter).spawnTetrimino();
+                if(!tetriminoBag.get(tetriminoCounter).getGameOverStatus()){
+                    if(tetriminoBag.get(tetriminoCounter).status()){
+                        tetriminoCounter++;
+                        if(tetriminoCounter == 7){
+                            bag.generateBag();
+                            tetriminoBag.addAll(bag.getBag());
+                            tetriminoCounter = 0;
+                        }
+
+                        tetriminoBag.get(tetriminoCounter).spawnTetrimino();
+                    }
+
+
+                    fi++;
+
+
+                    //INPUT
+
+                    // move left
+                    if(input.contains("LEFT")){
+                        tetriminoBag.get(tetriminoCounter).moveLeft();
+                        input.remove("LEFT");
+                    }
+
+                    //move right
+                    if(input.contains("RIGHT")){
+                        tetriminoBag.get(tetriminoCounter).moveRight();
+                        input.remove("RIGHT");
+                    }
+
+                    //drop
+                    if(input.contains("SPACE")){
+                        tetriminoBag.get(tetriminoCounter).drop();
+                        input.remove("SPACE");
+                    }
+
+                    //rotate left
+                    if(input.contains("Z")){
+                        tetriminoBag.get(tetriminoCounter).rotateLeft();
+                        input.remove("Z");
+                    }
+
+                    //rotate right
+                    if(input.contains("X")){
+                        tetriminoBag.get(tetriminoCounter).rotateRight();
+                        input.remove("X");
+                    }
+
+                    if(input.contains("DOWN")){
+                        speed = 3;
+                        input.remove("DOWN");
+                    }
+
+
+                    //hold (c)
+
+                    // pause esc
+
+
+                    //TIME STEP
+                    if(fi%speed == 0){
+                        tetriminoBag.get(tetriminoCounter).timeStep();
+                    }
+
+                    //Removes lines and calculates the score
+                    score.calculateScore();
+		    // rsob.upDate(tetriminoBag,tetriminoCounter);
+		    rsob.drawScore();
+		    
+                    drawBoard.paintBoard();
                 }
-
-	     
-                fi++;
-
-
-		//INPUT
-		
-		// move left
-                if(input.contains("LEFT")){
-                    tetriminoBag.get(tetriminoCounter).moveLeft();
-                    input.remove("LEFT");
+                //GAME OVER
+                else{
+                    System.out.println("GAME OVER\t\t" + score.getScore()+"\t\t" + score.getLvl());
                 }
-
-                //move right
-                if(input.contains("RIGHT")){
-                    tetriminoBag.get(tetriminoCounter).moveRight();
-                    input.remove("RIGHT");
-                }
-
-                //drop
-                if(input.contains("SPACE")){
-                    tetriminoBag.get(tetriminoCounter).drop();
-                    input.remove("SPACE");
-                }
-
-                //rotate left
-                if(input.contains("Z")){
-                    tetriminoBag.get(tetriminoCounter).rotateLeft();
-                    input.remove("Z");
-                }
-
-                //rotate right
-                if(input.contains("X")){
-                    tetriminoBag.get(tetriminoCounter).rotateRight();
-                    input.remove("X");
-                }
-
-                if(input.contains("DOWN")){
-                    speed = 1;
-                    input.remove("DOWN");
-                }
-
-
-                //hold (c)
-
-                // pause esc
-
-
-		//TIME STEP
-		if(fi%speed == 0){
-                    tetriminoBag.get(tetriminoCounter).timeStep();
-		}
-
-		//Removes lines and calculates the score
-		score.calculateScore();
-
-                drawBoard.paintBoard();
-
             }
         }.start();
 
