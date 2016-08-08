@@ -13,7 +13,7 @@ class LeftSideOfBoard{
 //    private ArrayList<Canvas> canvasList;
 //    private ArrayList<GraphicsContext> gcList;
 
-    public LeftSideOfBoard(GridPane gp){
+    public LeftSideOfBoard(GridPane gp, Bag bag){
         this.gp = gp;
         Canvas tempCanvas;
         GraphicsContext tempGc;
@@ -23,11 +23,11 @@ class LeftSideOfBoard{
             tempGc = tempCanvas.getGraphicsContext2D();
             tempGc.setFill(Color.WHITE);
             tempGc.fillRect(1,1,9,9);
-            if(Tetris.bag.getBag().get(nextIndex).getTetrimino().get(i) != 0){
+            if(bag.getBag().get(nextIndex).getTetrimino().get(i) != 0){
                 tempGc.setFill(Color.RED);
                 tempGc.fillRect(1,1,9,9);
             }
-            //  canvasList.add(tempCanvas); not working --> I don't know why the fuck this is not working ...
+            //  canvasList.add(tempCanvas); not working --> I don't know why this is not working ...
             //  gcList.add(tempGc); not working --> --||--
             gp.add(tempCanvas,i%4,i/4);
             //drawNextTetriminos();

@@ -106,9 +106,9 @@ public class Tetris extends Application{
         //RIGHT SIDE MENU class
         RightSideOfBoard rsob = new RightSideOfBoard(rightSideVBox,tetriminoBag,score);
 
-
+	
 	//LEFT SIDE NEXT PIECES
-	//LeftSideOfBoard lsob = new LeftSideOfBoard(leftSideGrid);
+//	LeftSideOfBoard lsob = new LeftSideOfBoard(leftSideGrid,bag);
 
         //GameLoop
         new AnimationTimer()
