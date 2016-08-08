@@ -238,8 +238,8 @@ class Shape{
         }
     }
 
-    //Helper Method  //finn den nederste "brikken før rotasjonen", finn ut om brukken  er under
-    // etter rotasjonen om så bomp tetrimnoen oppover , må teste at det går ann å bompe oppover
+    //Helper Method  //finn den nederste "brikken faar rotasjonen", finn ut om brukken  er under
+    // etter rotasjonen om sï¿½ bomp tetrimnoen oppover , maa teste at det gaar ann aa bompe oppover
     private boolean rotateOnGround(int[] xAY, int preState){
         int[] oldXAY = findElementPosition(preState,tetrimino,x,y);
         //IF ON GROUND OR ON TETRIMINO
