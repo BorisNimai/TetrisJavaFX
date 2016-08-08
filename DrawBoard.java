@@ -107,12 +107,12 @@ class DrawBoard{
 
         switch (colorID) {
 
-            // I shape --> Isblå
+            // I shape --> Isbl
         case 1: case 101: case 100: // case 100: just for testing sake
             arrayGc[i][j].setFill(Color.CYAN);
             break;
 
-            // J shape --> mørkeblå
+            // J shape --> morkeblaa
         case 2: case 102:
             arrayGc[i][j].setFill(Color.ROYALBLUE);
             break;
@@ -127,7 +127,7 @@ class DrawBoard{
             arrayGc[i][j].setFill(Color.YELLOW);
             break;
 
-            // S shape --> Grøn
+            // S shape --> Gronn
         case 5: case 105:
             arrayGc[i][j].setFill(Color.GREEN);
             break;
@@ -137,7 +137,7 @@ class DrawBoard{
             arrayGc[i][j].setFill(Color.PURPLE);
             break;
 
-            // z shape --> rød
+            // z shape --> rod
         case 7: case 107:
             arrayGc[i][j].setFill(Color.RED);
             break;
