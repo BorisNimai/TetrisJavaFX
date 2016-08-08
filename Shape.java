@@ -300,4 +300,9 @@ class Shape{
 	return colorID;
     }
 
+    //arrayList
+    public ArrayList<Integer> getTetrimino(){
+	return tetrimino;
+    }
+
 }

@@ -33,8 +33,8 @@ public class Tetris extends Application{
     */
     static public int speed = 60; //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     static public int ogSpeed = 60;
-    ArrayList<Shape> tetriminoBag;
-    
+    static public ArrayList<Shape> tetriminoBag;
+    //static public Bag bag;
 
 
     public void start(Stage primaryStage){
@@ -50,20 +50,22 @@ public class Tetris extends Application{
 
         // Tetris "canvas" setup
         GridPane tetrisGrid = new GridPane();
-
-	VBox rightSide = new VBox();
-        root.setCenter(tetrisGrid);
-        root.setRight(rightSide);
-
+	GridPane leftSideGrid = new GridPane();
+        VBox rightSideVBox = new VBox();
 	
+        root.setCenter(tetrisGrid);
+        root.setRight(rightSideVBox);
+	root.setLeft(leftSideGrid);
+
+
 
 
         Board board = new Board();
         Score score = new Score(0, board);
 
-	//RIGHT SIDE MENU class
-	RightSideOfBoard rsob = new RightSideOfBoard(rightSide,tetriminoBag,score);
-	
+        //RIGHT SIDE MENU class
+        //      RightSideOfBoard rsob = new RightSideOfBoard(rightSideVBox,tetriminoBag,score);
+
         DrawBoard drawBoard = new DrawBoard(tetrisGrid, board);
 
         ArrayList<String> input = new ArrayList<String>();
@@ -101,8 +103,13 @@ public class Tetris extends Application{
         tetriminoBag = bag.getBag();
         tetriminoBag.get(0).spawnTetrimino();
 
+        //RIGHT SIDE MENU class
+        RightSideOfBoard rsob = new RightSideOfBoard(rightSideVBox,tetriminoBag,score);
 
-	
+
+	//LEFT SIDE NEXT PIECES
+	//LeftSideOfBoard lsob = new LeftSideOfBoard(leftSideGrid);
+
         //GameLoop
         new AnimationTimer()
         {
@@ -178,9 +185,10 @@ public class Tetris extends Application{
 
                     //Removes lines and calculates the score
                     score.calculateScore();
-		    // rsob.upDate(tetriminoBag,tetriminoCounter);
-		    rsob.drawScore();
-		    
+                    rsob.upDate(tetriminoBag,tetriminoCounter);
+                    rsob.drawScore();
+                    rsob.drawLvl();
+                    rsob.drawLines();
                     drawBoard.paintBoard();
                 }
                 //GAME OVER

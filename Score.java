@@ -27,6 +27,11 @@ class Score{
     public int getLvl(){
 	return lvl;
     }
+
+    //get lines
+    public int getLines(){
+	return linesClear;
+    }
     
     //SET--------------------------------------------------    
 
@@ -52,13 +57,12 @@ class Score{
 
     public void calculateScore(){
 	int lines = board.clearLines();
+	linesClear += lines;
 	if(lines == 4) System.out.println(lines); // fdsfjdsklfjskldjfkl
 	if(lines != 0){	    
 	    score += linesClearScore[lines - 1] * (lvl + 1);
-	    linesClear += lines;
 	    setLvl();
 	    setSpeed();
-	    System.out.println(score);
 	}
     }
     
