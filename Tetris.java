@@ -34,6 +34,7 @@ public class Tetris extends Application{
     static public int speed = 60; //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     static public int ogSpeed = 60;
     static public ArrayList<Shape> tetriminoBag;
+    public LeftSideOfBoard lsob;
     //static public Bag bag;
 
 
@@ -108,7 +109,7 @@ public class Tetris extends Application{
 
 	
 	//LEFT SIDE NEXT PIECES
-//	LeftSideOfBoard lsob = new LeftSideOfBoard(leftSideGrid,bag);
+	lsob = new LeftSideOfBoard(leftSideGrid,bag,0);
 
         //GameLoop
         new AnimationTimer()
@@ -121,14 +122,15 @@ public class Tetris extends Application{
             public void handle(long currentNanoTime){
                 if(!tetriminoBag.get(tetriminoCounter).getGameOverStatus()){
                     if(tetriminoBag.get(tetriminoCounter).status()){
-                        tetriminoCounter++;
-                        if(tetriminoCounter == 7){
+                        tetriminoCounter++;			
+			if(tetriminoCounter == 7){
                             bag.generateBag();
                             tetriminoBag.addAll(bag.getBag());
                             tetriminoCounter = 0;
                         }
 
                         tetriminoBag.get(tetriminoCounter).spawnTetrimino();
+			lsob = new LeftSideOfBoard(leftSideGrid,bag,tetriminoCounter);
                     }
 
 
@@ -190,6 +192,7 @@ public class Tetris extends Application{
                     rsob.drawLvl();
                     rsob.drawLines();
                     drawBoard.paintBoard();
+		  
                 }
                 //GAME OVER
                 else{
