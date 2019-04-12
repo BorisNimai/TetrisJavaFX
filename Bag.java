@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-class Bag{
-
-
+class Bag {
     private  ArrayList<Shape> tetriminoBag = new ArrayList<Shape>();
     private Board board;
 
@@ -11,12 +9,10 @@ class Bag{
         this.board = board;
     }
 
-
     public void generateBag(){
         Random rand = new Random();
         int m;
-	tetriminoBag.removeAll(tetriminoBag);
-	
+	      tetriminoBag.removeAll(tetriminoBag);
 
         for(int i = 0; i < 14; i++){
             m = rand.nextInt(6);
@@ -51,6 +47,4 @@ class Bag{
     public ArrayList<Shape> getBag(){
         return tetriminoBag;
     }
-
-
 }
